@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Name — Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio of Your Name, software engineer and builder"
+    />
+    <style>
+      :root {
+        --bg: #0b0c10;
+        --surface: #111318;
+        --text: #e6e6e6;
+        --muted: #a1a1aa;
+        --brand: #6ee7ff;
+        --brand-2: #a78bfa;
+        --card: #141821;
+        --stroke: #232634;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        --radius: 14px;
+        --pad: 16px;
+        --pad-lg: 28px;
+        --maxw: 1080px;
+        --focus: 0 0 0 3px rgba(110, 231, 255, 0.35),
+          0 0 0 6px rgba(167, 139, 250, 0.25);
+      }
+
+      /* Light theme */
+      [data-theme="light"] {
+        --bg: #f7f7fb;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --brand: #0ea5e9;
+        --brand-2: #7c3aed;
+        --card: #ffffff;
+        --stroke: #e5e7eb;
+        --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      }
+
+      /* Fallback to system preference if no data-theme is set */
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme]) {
+          --bg: #f7f7fb;
+          --surface: #ffffff;
+          --text: #0f172a;
+          --muted: #475569;
+          --brand: #0ea5e9;
+          --brand-2: #7c3aed;
+          --card: #ffffff;
+          --stroke: #e5e7eb;
+          --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial,
+          sans-serif;
+        color: var(--text);
+        background: radial-gradient(
+            1200px 600px at 10% -10%,
+            rgba(167, 139, 250, 0.18),
+            transparent
+          ),
+          radial-gradient(
+            800px 400px at 90% 0%,
+            rgba(110, 231, 255, 0.15),
+            transparent
+          ),
+          var(--bg);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      /* Shell */
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 var(--pad);
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: saturate(1.2) blur(20px);
+        background: color-mix(in oklab, var(--bg) 85%, transparent);
+        border-bottom: 1px solid
+          color-mix(in oklab, var(--stroke) 60%, transparent);
+        transition: all 0.3s ease;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+        position: relative;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        font-size: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .brand:hover {
+        transform: translateY(-1px);
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: conic-gradient(from 210deg, var(--brand), var(--brand-2));
+        box-shadow: 0 8px 32px rgba(110, 231, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .logo::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .logo:hover::before {
+        transform: translateX(100%);
+      }
+
+      .logo:hover {
+        transform: scale(1.05) rotate(5deg);
+        box-shadow: 0 12px 40px rgba(110, 231, 255, 0.4);
+      }
+
+      .links {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        position: relative;
+      }
+
+      .links a {
+        padding: 10px 16px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-weight: 500;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .links a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      .links a:hover {
+        border-color: color-mix(in oklab, var(--brand) 40%, transparent);
+        background: color-mix(in oklab, var(--card) 90%, transparent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(110, 231, 255, 0.15);
+      }
+
+      .links a:hover::before {
+        opacity: 0.1;
+      }
+
+      .btn {
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: #0b1220;
+        font-weight: 700;
+        padding: 12px 20px;
+        border-radius: 14px;
+        box-shadow: 0 8px 32px rgba(110, 231, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        font-size: 15px;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(110, 231, 255, 0.4);
+      }
+
+      .btn:hover::before {
+        opacity: 1;
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* Hero */
+      .hero {
+        padding: 80px 0 60px;
+        display: grid;
+        gap: 32px;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(110, 231, 255, 0.08) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        animation: float 20s ease-in-out infinite;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: -20%;
+        left: -5%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(167, 139, 250, 0.06) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        animation: float 15s ease-in-out infinite reverse;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(30px, -30px) scale(1.1);
+        }
+      }
+
+      .hero > div {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 50px;
+        background: color-mix(in oklab, var(--card) 95%, transparent);
+        border: 1px solid color-mix(in oklab, var(--brand) 30%, transparent);
+        color: var(--brand);
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(110, 231, 255, 0.15);
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease;
+      }
+
+      .hero-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(110, 231, 255, 0.25);
+      }
+
+      .hero-badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: var(--brand);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--brand);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.2);
+        }
+      }
+
+      .hero h1 {
+        font-size: clamp(36px, 6vw, 64px);
+        line-height: 1.1;
+        margin: 0 0 20px;
+        letter-spacing: -0.02em;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: fadeInUp 0.8s ease 0.2s both;
+      }
+
+      .hero p {
+        margin: 0 0 32px;
+        color: var(--muted);
+        font-size: clamp(16px, 2vw, 20px);
+        line-height: 1.6;
+        max-width: 600px;
+        animation: fadeInUp 1s ease 0.4s both;
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        animation: fadeInUp 1.2s ease 0.6s both;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid color-mix(in oklab, var(--stroke) 60%, transparent);
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+        background: color-mix(in oklab, var(--card) 90%, transparent);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .pill::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      .pill:hover {
+        border-color: color-mix(in oklab, var(--brand) 40%, transparent);
+        background: color-mix(in oklab, var(--card) 95%, transparent);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(110, 231, 255, 0.2);
+      }
+
+      .pill:hover::before {
+        opacity: 0.1;
+      }
+
+      .pill:active {
+        transform: translateY(0);
+      }
+
+      /* Sections */
+      section {
+        padding: 60px 0;
+      }
+
+      section h2 {
+        font-size: clamp(24px, 3vw, 36px);
+        margin: 0 0 40px;
+        letter-spacing: -0.01em;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(12, 1fr);
+      }
+
+      /* Cards */
+      .card {
+        grid-column: span 12;
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(110, 231, 255, 0.2);
+        border-color: color-mix(in oklab, var(--brand) 40%, transparent);
+      }
+
+      .card:hover::before {
+        transform: scaleX(1);
+      }
+
+      @media (min-width: 700px) {
+        .card.span-6 {
+          grid-column: span 6;
+        }
+        .card.span-4 {
+          grid-column: span 4;
+        }
+      }
+
+      .card h3 {
+        margin: 0 0 12px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+      }
+
+      .card p {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .tags {
+        margin-top: 0;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      /* Project cover */
+      .cover {
+        aspect-ratio: 16 / 9;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--stroke);
+        margin-bottom: 20px;
+        background: conic-gradient(
+            from 135deg at 50% 50%,
+            rgba(110, 231, 255, 0.3) 0deg,
+            rgba(167, 139, 250, 0.2) 90deg,
+            rgba(110, 231, 255, 0.3) 180deg,
+            rgba(167, 139, 250, 0.2) 270deg,
+            rgba(110, 231, 255, 0.3) 360deg
+          ),
+          radial-gradient(
+            40% 60% at 70% 30%,
+            color-mix(in oklab, var(--brand) 40%, transparent),
+            transparent
+          ),
+          radial-gradient(
+            50% 50% at 30% 70%,
+            color-mix(in oklab, var(--brand-2) 35%, transparent),
+            transparent
+          ),
+          linear-gradient(
+            180deg,
+            color-mix(in oklab, var(--card) 70%, transparent),
+            var(--card)
+          );
+        display: grid;
+        place-items: center;
+        color: var(--text);
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        font-size: clamp(20px, 4vw, 32px);
+        position: relative;
+        transition: all 0.4s ease;
+      }
+
+      .cover::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: conic-gradient(
+          from 180deg,
+          transparent 0deg,
+          transparent 60deg
+        );
+        opacity: 0;
+        animation: rotate 20s linear infinite;
+      }
+
+      .cover::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(110, 231, 255, 0.15),
+          rgba(167, 139, 250, 0.15)
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .card:hover .cover {
+        transform: scale(1.02);
+      }
+
+      .card:hover .cover::after {
+        opacity: 1;
+      }
+
+      /* Project card icon container */
+      .cover-icon {
+        font-size: 48px;
+        z-index: 1;
+      }
+
+      /* Footer */
+      footer {
+        padding: 36px 0 56px;
+        color: var(--muted);
+        border-top: 1px solid var(--stroke);
+      }
+
+      /* Form */
+      .form {
+        display: grid;
+        gap: 12px;
+      }
+      .input,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--stroke);
+        background: color-mix(in oklab, var(--surface) 92%, transparent);
+        color: var(--text);
+      }
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .input:focus,
+      textarea:focus,
+      .links a:focus,
+      .btn:focus {
+        outline: none;
+        box-shadow: var(--focus);
+      }
+
+      /* Tooltip */
+      .tip {
+        position: relative;
+        cursor: default;
+      }
+      .tip:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        top: 120%;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        font-size: 12px;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--stroke);
+        padding: 6px 8px;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      /* Mobile nav */
+      .menu {
+        display: none;
+      }
+
+      @media (max-width: 700px) {
+        .links {
+          display: none;
+        }
+
+        .links #theme {
+          display: none;
+        }
+
+        .menu {
+          display: inline-flex;
+          gap: 12px;
+          align-items: center;
+        }
+
+        .sheet {
+          position: fixed;
+          inset: 80px 16px auto;
+          background: color-mix(in oklab, var(--surface) 95%, transparent);
+          backdrop-filter: saturate(1.2) blur(20px);
+          border: 1px solid color-mix(in oklab, var(--stroke) 60%, transparent);
+          border-radius: 20px;
+          padding: 20px;
+          display: none;
+          flex-direction: column;
+          gap: 8px;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .sheet a {
+          padding: 14px 16px;
+          border-radius: 12px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .sheet a::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, var(--brand), var(--brand-2));
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: -1;
+        }
+
+        .sheet a:hover {
+          background: color-mix(in oklab, var(--card) 90%, transparent);
+          transform: translateX(4px);
+          box-shadow: 0 4px 15px rgba(110, 231, 255, 0.2);
+        }
+
+        .sheet a:hover::before {
+          opacity: 0.1;
+        }
+
+        .sheet.open {
+          display: flex;
+        }
+
+        .nav {
+          padding: 12px 0;
+        }
+      }
+
+      /* Print */
+      @media print {
+        header,
+        .hero-cta,
+        .menu,
+        .sheet,
+        .cover,
+        .btn {
+          display: none !important;
+        }
+        body {
+          background: #fff;
+          color: #000;
+        }
+        .card {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav" aria-label="Primary">
+        <a class="brand" href="#top" id="top">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Your Name</span>
+        </a>
+        <nav class="links">
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#about">About</a>
+          <a href="#contact" class="btn">Contact</a>
+          <button
+            id="theme"
+            class="pill tip"
+            data-tip="Toggle theme"
+            aria-label="Toggle theme"
+          >
+            🌓
+          </button>
+        </nav>
+        <div class="menu">
+          <button
+            id="openMenu"
+            class="pill"
+            aria-expanded="false"
+            aria-controls="sheet"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+      <div class="wrap">
+        <div
+          id="sheet"
+          class="sheet"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="openMenu"
+        >
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <button
+            id="themeMobile"
+            class="pill tip"
+            data-tip="Toggle theme"
+            aria-label="Toggle theme"
+          >
+            🌓 Theme
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <span class="hero-badge">Available for new work</span>
+          <h1>
+            Crafting digital experiences that
+            <span
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--brand) 0%,
+                  var(--brand-2) 100%
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+              "
+              >delight users</span
+            >
+            and drive results
+          </h1>
+          <p>
+            I design and ship web applications that feel instant, look
+            beautiful, and solve real problems. Specializing in modern
+            interfaces and performance optimization.
+          </p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn">View My Work →</a>
+            <a href="#contact" class="pill">Get In Touch</a>
+            <a href="#" class="pill" id="downloadResume">Download Résumé</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="grid">
+          <article class="card span-6">
+            <div class="cover">
+              <span class="cover-icon">📊</span>
+            </div>
+            <h3>Realtime Task Board</h3>
+            <p>
+              Kanban board with live updates, offline-friendly cache, and
+              keyboard shortcuts
+            </p>
+            <div class="tags">
+              <span class="pill">React</span>
+              <span class="pill">WebSocket</span>
+              <span class="pill">IndexedDB</span>
+            </div>
+          </article>
+
+          <article class="card span-6">
+            <div class="cover">
+              <span class="cover-icon">🎓</span>
+            </div>
+            <h3>Course Portal</h3>
+            <p>
+              Learning portal with clean UI, progress tracking, and
+              lightning-fast search
+            </p>
+            <div class="tags">
+              <span class="pill">Next.js</span>
+              <span class="pill">Postgres</span>
+              <span class="pill">Redis</span>
+            </div>
+          </article>
+
+          <article class="card span-4">
+            <div class="cover">
+              <span class="cover-icon">🖼️</span>
+            </div>
+            <h3>Image Compressor</h3>
+            <p>
+              Drag and drop interface that compresses images on the client while
+              maintaining quality
+            </p>
+            <div class="tags">
+              <span class="pill">Squoosh</span>
+              <span class="pill">PWA</span>
+            </div>
+          </article>
+
+          <article class="card span-4">
+            <div class="cover">
+              <span class="cover-icon">⚡</span>
+            </div>
+            <h3>CLI Helper</h3>
+            <p>
+              Zero-config scripts for common development tasks and release
+              workflows
+            </p>
+            <div class="tags">
+              <span class="pill">Node</span>
+              <span class="pill">CI/CD</span>
+            </div>
+          </article>
+
+          <article class="card span-4">
+            <div class="cover">
+              <span class="cover-icon">🤖</span>
+            </div>
+            <h3>AI Notes</h3>
+            <p>
+              Intelligent notes with local vector search and instant semantic
+              search capabilities
+            </p>
+            <div class="tags">
+              <span class="pill">WebGPU</span>
+              <span class="pill">SQLite WASM</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2>Experience</h2>
+        <div class="grid">
+          <article class="card span-6">
+            <h3>Senior Engineer, Company A</h3>
+            <p>Owned the web platform, lifted core vitals, mentored juniors</p>
+            <ul>
+              <li>
+                Cut largest contentful paint on key pages by forty percent
+              </li>
+              <li>Built shared design tokens and theme system</li>
+              <li>Led migration to typed API clients</li>
+            </ul>
+          </article>
+          <article class="card span-6">
+            <h3>Engineer, Company B</h3>
+            <p>Shipped features for checkout and growth</p>
+            <ul>
+              <li>
+                Raised conversion on mobile through faster steps and clearer
+                copy
+              </li>
+              <li>Reduced error rate with contract tests and alerting</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <div class="grid">
+          <article class="card">
+            <p>
+              I enjoy clean interfaces, reliable systems, and tidy code. I write
+              tests, measure results, and keep an eye on details that matter
+            </p>
+            <p class="tags">
+              <span class="pill">TypeScript</span>
+              <span class="pill">React</span>
+              <span class="pill">Node</span>
+              <span class="pill">Postgres</span>
+              <span class="pill">Docker</span>
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <div class="grid">
+          <form class="card span-6 form" onsubmit="return sendMessage(event)">
+            <input
+              class="input"
+              id="name"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              required
+            />
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Say hello"
+              required
+            ></textarea>
+            <button class="btn" type="submit">Send</button>
+            <p
+              id="status"
+              aria-live="polite"
+              style="margin: 0; color: var(--muted)"
+            ></p>
+          </form>
+          <aside class="card span-6">
+            <h3>Links</h3>
+            <p>
+              <a class="pill" href="mailto:you@example.com">Email</a>
+              <a
+                class="pill"
+                href="https://github.com/yourname"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+              <a
+                class="pill"
+                href="https://www.linkedin.com/in/yourname"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn</a
+              >
+            </p>
+            <p class="tip" data-tip="Copies address">
+              <button class="pill" onclick="copyText('you@example.com')">
+                Copy email
+              </button>
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p>
+          © <span id="year"></span> Your Name. Built with clean HTML, CSS, and
+          JavaScript
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const id = a.getAttribute("href").slice(1);
+          const el = document.getElementById(id);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            // Close mobile sheet if open
+            sheet.classList.remove("open");
+            openMenu.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+
+      // Mobile menu sheet
+      const openMenu = document.getElementById("openMenu");
+      const sheet = document.getElementById("sheet");
+      openMenu?.addEventListener("click", () => {
+        const open = sheet.classList.toggle("open");
+        openMenu.setAttribute("aria-expanded", String(open));
+      });
+      document.addEventListener("click", (e) => {
+        if (!sheet.contains(e.target) && !openMenu.contains(e.target)) {
+          sheet.classList.remove("open");
+          openMenu.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // Theme toggle with local storage
+      const themeBtn = document.getElementById("theme");
+      const themeMobileBtn = document.getElementById("themeMobile");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+      const applyTheme = (mode) => {
+        document.documentElement.setAttribute("data-theme", mode);
+        localStorage.setItem("theme", mode);
+      };
+
+      const initTheme = () => {
+        const saved = localStorage.getItem("theme");
+        if (saved) {
+          applyTheme(saved);
+        } else {
+          // Use system preference as default
+          applyTheme(prefersDark.matches ? "dark" : "light");
+        }
+      };
+
+      const toggleTheme = () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const newTheme = current === "light" ? "dark" : "light";
+        applyTheme(newTheme);
+      };
+
+      themeBtn?.addEventListener("click", toggleTheme);
+      themeMobileBtn?.addEventListener("click", toggleTheme);
+      initTheme();
+
+      // Contact form mock
+      function sendMessage(event) {
+        event.preventDefault();
+        const s = document.getElementById("status");
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const msg = document.getElementById("message").value.trim();
+
+        if (!name || !email || !msg) {
+          s.textContent = "Please fill all fields";
+          return false;
+        }
+        // Example payload if you wire to a real endpoint
+        // fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, message: msg }) })
+
+        s.textContent =
+          "Thanks, your message is saved in memory for this session only";
+        event.target.reset();
+        return false;
+      }
+
+      // Copy helper
+      function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert("Copied");
+        });
+      }
+
+      // Resume mock download
+      document
+        .getElementById("downloadResume")
+        ?.addEventListener("click", (e) => {
+          e.preventDefault();
+          const blob = new Blob(
+            ["Resume, Your Name\nSkills, Experience, Projects"],
+            { type: "application/pdf" }
+          );
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "Your-Name-Resume.pdf";
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(url);
+          a.remove();
+        });
+
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
